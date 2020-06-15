@@ -2,50 +2,62 @@
 
 Nyancat running on dotnet core.
 
-[![AppVeyor build status][appveyor-badge]](https://ci.appveyor.com/project/nickvandyck/nyancat-cs/branch/master)
+[![Build status][ci-badge]][ci-url]
+[![NuGet][nuget-package-badge]][nuget-package-url]
+[![feedz.io][feedz-package-badge]][feedz-package-url]
 
-[appveyor-badge]: https://img.shields.io/appveyor/ci/nickvandyck/nyancat-cs/master.svg?label=appveyor&style=flat-square
-
-[![NuGet][main-nuget-badge]][main-nuget]
-
-[main-nuget]: https://www.nuget.org/packages/nyancat/
-[main-nuget-badge]: https://img.shields.io/nuget/v/nyancat.svg?style=flat-square&label=nuget
-
-![nyancat terminal](docs/nyancat-console.png)
+![Nyancat terminal](docs/nyancat-console.png)
 
 ## Get Started
 
-Download the [2.1.300](https://www.microsoft.com/net/download/windows) .NET Core SDK or newer.
-Once installed, running the following  to install the application:
+Download the latest [.NET Core SDK](https://dotnet.microsoft.com/download) for you platform.
+Once installed, run the following command to install:
 
 ```sh
 dotnet tool install --global nyancat
 ```
 
-Or use the following when upgrading from a previous version:
+Or use the following to upgrade to the latest version:
 
 ```sh
 dotnet tool update --global nyancat
 ```
 
-After you everything installed just type `nyancat` to kick of the application
-
-```sh
-nyancat
-```
-
-Have fun! 🎉
+When everything is installed just type `nyancat` in your favourite terminal and have fun! 🎉
 
 ## Usage
 
 ```sh
+nyancat: 1.2.0
+
+Terminal nyancat runner
+
 Usage: nyancat [options]
 
-Options:
-  --version             Show version information
-  -i|--intro            Show the introduction / about information at startup
-  -n|--no-counter       Do not display the timer
-  -s|--no-title         Do not set the titlebar text
-  -f|--frames <FRAMES>  Display the requested number of frames, then quit
-  -?|-h|--help          Show help information
+Options
+
+  -i, --intro                Show the introduction / about information at startup
+  -n, --no-counter           Do not display the timer
+  -t, --no-title             Do not set the titlebar text
+  -f, --frames=VALUE         Display the requested number of frames, then quit
+  -?, -h, --help             Show help information
+  -v, --version              Show version information
 ```
+
+## Local installation
+
+Run the following commands to create a release build and install the tool into your path:
+
+```sh
+make
+make install
+```
+
+[ci-url]: https://github.com/nickvdyck/nyancat.cs
+[ci-badge]: https://github.com/nickvdyck/nyancat.cs/workflows/CI/badge.svg
+
+[nuget-package-url]: https://www.nuget.org/packages/nyancat/
+[nuget-package-badge]: https://img.shields.io/nuget/v/nyancat.svg?style=flat-square&label=nuget
+
+[feedz-package-url]: https://f.feedz.io/nvd/nyancat-cs/packages/nyancat/latest/download
+[feedz-package-badge]: https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fnvd%2Fnyancat-cs%2Fshield%2Fnyancat%2Flatest&label=nyancat
