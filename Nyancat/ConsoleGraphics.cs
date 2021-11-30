@@ -40,6 +40,7 @@ namespace Nyancat
 
             // This is only needed for windows
             StoreInitialConsoleMode();
+            StoreInitialConsoleCursorMode();
         }
 
         private char[] _buffer;
@@ -49,7 +50,6 @@ namespace Nyancat
 
         public string Title
         {
-            get => Console.Title;
             set => Console.Title = value;
         }
 
@@ -192,6 +192,7 @@ namespace Nyancat
         {
             // Windows only
             RestoreConsoleMode();
+            RestoreConsoleCursorInfo();
 
             // Restore Console
             if (ConsoleColorSupport.Level == ColorSupportLevel.None)
@@ -210,7 +211,7 @@ namespace Nyancat
             {
                 ArrayPool<char>.Shared.Return(_buffer);
             }
-            
+
             // Reset
             _buffer = null;
             _index = 0;
@@ -231,6 +232,23 @@ namespace Nyancat
             if (GetConsoleMode(stdOutHandle, out InitialConsoleMode))
             {
                 HasInitialConsoleMode = true;
+            }
+        }
+
+        private static CONSOLE_CURSOR_INFO InitialConsoleCursorInfo;
+        private static bool HasInitialConsoleCursorInfo;
+
+        private static void StoreInitialConsoleCursorMode()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+
+            var stdOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+            if (stdOutHandle == INVALID_HANDLE_VALUE) return;
+
+            if (GetConsoleCursorInfo(stdOutHandle, out InitialConsoleCursorInfo))
+            {
+                HasInitialConsoleCursorInfo = true;
             }
         }
 
@@ -265,6 +283,17 @@ namespace Nyancat
             if (stdOutHandle == INVALID_HANDLE_VALUE) return;
 
             SetConsoleMode(stdOutHandle, InitialConsoleMode);
+        }
+
+        private static void RestoreConsoleCursorInfo()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+            if (!HasInitialConsoleCursorInfo) return;
+
+            var stdOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+            if (stdOutHandle == INVALID_HANDLE_VALUE) return;
+
+            SetConsoleCursorInfo(stdOutHandle, ref InitialConsoleCursorInfo);
         }
     }
 }

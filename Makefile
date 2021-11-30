@@ -18,7 +18,7 @@ clean:
 
 .PHONY: run
 run:
-	dotnet run --project $(CLI_PROJECT) --framework netcoreapp3.1
+	dotnet run --project $(CLI_PROJECT) --framework net5.0
 
 .PHONY: restore
 restore:
@@ -39,10 +39,11 @@ package:
 
 .PHONY: package-native
 package-native:
+	# Prereqs: https://github.com/dotnet/runtimelab/blob/feature/NativeAOT/samples/prerequisites.md#ubuntu-1604
 	dotnet publish $(CLI_PROJECT) -c $(CONFIGURATION) \
 		--output $(BUILD)/publish/$(RUNTIME) \
 		--runtime $(RUNTIME) \
-		 --framework netcoreapp3.1 \
+		 --framework net5.0 \
 		/p:Mode=CoreRT-ReflectionFree
 
 	@mkdir -p $(ARTIFACTS)
